@@ -9,4 +9,5 @@ This repository provides the rhoDST solver for the simulation of high speed comp
 # Developers
 
 Ender Demirel, PhD
+
 Aras Dogan
