@@ -203,7 +203,6 @@ void Roe<Type>::computeJacobianDST()
     forAll(mesh_.boundary(),patchI)
     {
         // Spectral radius is added to the coupled patches only.
-        // HiSA adds spectral radius to the physical boundaries as well.
         if(mesh_.boundary()[patchI].coupled())
         {
             spectPatch_[patchI] = I*(lambda.boundaryField()[patchI]);
