@@ -1,0 +1,23 @@
+/*-----------------------------------------------------------------------------------------*\
+| =========                 |                                                               |
+| \\      /  F ield         | rhoDST: Block-coupled solver for compressible flows           |
+|  \\    /   O peration     |                                                               |
+|   \\  /    A nd           | Copyright (C) 2020 Design and Simulation Tech. Inc. (DSTECH)  |
+|    \\/     M anipulation  | Website:  http://www.dstechno.net/                            |
+\*-----------------------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.3;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      decomposeParDict;
+}
+// *************************************************************************************** //
+
+numberOfSubdomains 8;
+
+method          scotch;
+
+// *************************************************************************************** //

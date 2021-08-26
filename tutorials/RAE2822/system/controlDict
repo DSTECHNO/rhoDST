@@ -1,0 +1,88 @@
+/*-----------------------------------------------------------------------------------------*\
+| =========                 |                                                               |
+| \\      /  F ield         | rhoDST: Block-coupled solver for compressible flows           |
+|  \\    /   O peration     |                                                               |
+|   \\  /    A nd           | Copyright (C) 2020 Design and Simulation Tech. Inc. (DSTECH)  |
+|    \\/     M anipulation  | Website:  http://www.dstechno.net/                            |
+\*-----------------------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// *************************************************************************************** //
+
+libs
+(
+    "libcompressibleRASModels.so"
+    "liblduSolvers.so"
+);
+
+application     rhoDST;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         1000; // maxIterations
+
+deltaT          1;
+
+writeControl    timeStep;
+
+writeInterval   100; 
+
+purgeWrite      2;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+rDeltaTSmoothingCoeff 0.1;
+
+
+functions
+{
+    pressureDist
+    {
+        type                surfaces;
+        functionObjectLibs  ( "libsampling.so" );
+        outputControl       outputTime;
+        outputInterval      1;
+        surfaceFormat       raw;
+        fields
+        (
+            p
+        );
+        interpolationScheme cellPoint;
+
+        surfaces
+        (
+            airfoil
+            {
+                type	    patch;
+                patchName   airfoil;
+            } 
+        );
+    }
+    #include        "forces"  
+}
+
+
+// *************************************************************************************** //
