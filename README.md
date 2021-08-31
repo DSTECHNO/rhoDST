@@ -9,7 +9,7 @@ This repository provides a density based solver **rhoDST(c)** for steady and uns
  - Continuity, momentum and energy equations are implicity coupled in a single matrix.  The block-matrix can be solved using block-matrix solvers such as GMRES, BICG and multigrid methods, which are availble in foam-extend libraries. 
  - Local time stepping is used for the rapid convergence to the steady-state solution. 
  - Shock-discontinuities can be captured using Kurganov, AUSM, AUSM+, AUSM+up, HLL, HLLC and HLLCP shock-capturing methods. 
- - Modifications of SpalartAllamaras turbulence model are incorporated to the turbulence libraries. Spalart-Shur rotation/curvature correction was implemented to account for rotation and curvature effects.  Simpler Rotation-Curvature Correction method is applied to Spalart-Allmaras turbulence models. Negative Spalart-Allmaras is implemented to resolve numerical issues near the interface between turbulent and irrotational regions. 
+ - Modifications of SpalartAllamaras turbulence model are incorporated to the turbulence libraries. Simpler Rotation-Curvature and Spalart-Shur rotation/curvature correction were implemented to account for rotation and curvature effects.  Negative Spalart-Allmaras is implemented to resolve numerical issues near the interface between turbulent and irrotational regions. 
  
 
 # Developers
@@ -17,3 +17,5 @@ This repository provides a density based solver **rhoDST(c)** for steady and uns
 Ender Demirel, PhD
 
 Aras Dogan
+
+
