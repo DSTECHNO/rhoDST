@@ -52,7 +52,7 @@ defineRunTimeSelectionTable(iteration, dictionary);
 
 iteration::iteration
 (
-    const IOdictDST& dict,
+    IOdictDST& dict,
     timeDST& runTime,
     basicThermo& thermo,
     volVectorField& U,
@@ -60,6 +60,7 @@ iteration::iteration
     baseFluxDST& rhoDSTFlux
 )
 :
+    dictDST(dict),
     runTime_(runTime),
     thermo_(thermo),
     U_(U),

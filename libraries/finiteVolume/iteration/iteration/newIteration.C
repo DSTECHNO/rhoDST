@@ -48,7 +48,7 @@ namespace Foam
 
 autoPtr<iteration> iteration::New
 (
-    const IOdictDST& dict,
+    IOdictDST& dict,
     timeDST& runTime,
     basicThermo& thermo,
     volVectorField& U,

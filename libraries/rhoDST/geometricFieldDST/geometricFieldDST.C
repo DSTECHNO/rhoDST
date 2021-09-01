@@ -53,7 +53,7 @@ geometricFieldDST<Type>::geometricFieldDST
     const fvMesh& mesh,
     const dimensioned<Type>& dt,
     timeDST& runTimeDST,
-    const IOdictDST& dictDST
+    IOdictDST& dictDST
 )
 :
     GeometricField<Type, Foam::fvPatchField, Foam::volMesh>
@@ -109,7 +109,7 @@ GeometricField<Type, Foam::fvPatchField, Foam::volMesh>& geometricFieldDST<Type>
 }
 
 template<class Type>
-const IOdictDST& geometricFieldDST<Type>::dictDST()
+IOdictDST& geometricFieldDST<Type>::dictDST()
 {
     return dictDST_;
 }

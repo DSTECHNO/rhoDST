@@ -74,7 +74,7 @@ class geometricFieldDST
             volVectorField* rhoU_;
             volScalarField* rhoE_;
             timeDST& runTimeDST_;
-            const IOdictDST& dictDST_;
+            IOdictDST& dictDST_;
     
     public:
             //- Constructors
@@ -84,7 +84,7 @@ class geometricFieldDST
                     const fvMesh& mesh,
                     const dimensioned<Type>& dt,
                     timeDST& runTimeDST,
-                    const IOdictDST& dictDST
+                    IOdictDST& dictDST
                 );
 
             //- Destructor
@@ -93,7 +93,7 @@ class geometricFieldDST
 
             //- Member Functions
                 timeDST& runTime();
-                const IOdictDST& dictDST();
+                IOdictDST& dictDST();
                 GeometricField<Type, Foam::fvPatchField, Foam::volMesh>& delta();
 
                 template<class fType>

@@ -79,45 +79,35 @@ void timeDST::initialize
 
     dictPtr = &dict;
 
-    steadyState = false;
-
-    word ddtSc(mesh.schemesDict().ddtScheme("default"));
-
-    if(ddtSc == "steadyStateDST" || ddtSc == "steadyState")
-        steadyState = true;
-
-    if(steadyState)
-    {
-        rhoOldPtr = autoPtr<volScalarField>
-        (   new volScalarField
+    rhoOldPtr = autoPtr<volScalarField>
+    (   new volScalarField
+        (
+            IOobject
             (
-                IOobject
-                (
-                    "rhoOld",
-                    mesh.time().timeName(),
-                    mesh,
-                    IOobject::NO_READ,
-                    IOobject::NO_WRITE
-                ),
-                thermoPtr->rho()
-            )
-        );
-        
-        eOldPtr = autoPtr<volScalarField> 
-        (   new volScalarField
+                "rhoOld",
+                mesh.time().timeName(),
+                mesh,
+                IOobject::NO_READ,
+                IOobject::NO_WRITE
+            ),
+            thermoPtr->rho()
+        )
+    );
+    
+    eOldPtr = autoPtr<volScalarField> 
+    (   new volScalarField
+        (
+            IOobject
             (
-                IOobject
-                (
-                    "eOld",
-                    mesh.time().timeName(),
-                    mesh,
-                    IOobject::NO_READ,
-                    IOobject::NO_WRITE
-                ),
-                thermoPtr->h()*thermoPtr->Cv()/thermoPtr->Cp()
-            )
-        );
-    }
+                "eOld",
+                mesh.time().timeName(),
+                mesh,
+                IOobject::NO_READ,
+                IOobject::NO_WRITE
+            ),
+            thermoPtr->h()*thermoPtr->Cv()/thermoPtr->Cp()
+        )
+    );
 
     neighbouring = dictPtr->neighbouring();
 
@@ -207,7 +197,7 @@ void timeDST::initialize
         )
     );
     
-    if(steadyState)
+    if(dictPtr->steadyState())
     {
         setSteadyStateDeltaT();
     }
@@ -343,7 +333,7 @@ void timeDST::setCourantDST()
     }
     residual = residualR;    
     
-    if (steadyState)
+    if (dictPtr->steadyState())
     {
         const volScalarField& rho = mesh.lookupObject<volScalarField>("rho");
         const volVectorField& rhoU = mesh.lookupObject<volVectorField>("rhoU");
@@ -437,7 +427,7 @@ void timeDST::setCourantDST()
 
 bool timeDST::localTimeStepping()
 {
-    return steadyState;
+    return dictPtr->steadyState();
 }
 const scalarField& timeDST::rDeltaTDST() const
 {

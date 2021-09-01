@@ -71,7 +71,7 @@ class Single
         //- Construct from components
             Single
             (
-                const IOdictDST& dict,
+                IOdictDST& dict,
                 timeDST& runTime,
                 basicThermo& thermo,
                 volVectorField& U,

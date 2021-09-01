@@ -95,17 +95,37 @@ tmp<fvBlockMatrixDST<Type>> ddt
         // The matrix diagonal coeffs are calculated using the ddtScheme for rho variable given in
         // fvSchemes dict. If rho, rhoU and rhoE have the same ddtScheme then, the diagonals would
         // be the same for each variable. 
-        tmp<fvScalarMatrix> rhoEqn(fvm::ddt(psi.rho()));
+        tmp<fvScalarMatrix> rhoEqn
+        (
+            fv::ddtScheme<scalar>::New
+            (
+                mesh,
+                psi.dictDST().ddtSchemeRho()
+            )().fvmDdt(psi.rho())
+        );
 
         d = DST::I<Type>()*rhoEqn->diag();
         DST::insert(s, rhoEqn->source()-rhoEqn->diag()*psi.rho().internalField(), 0);
         rhoEqn.clear();
-        
-        tmp<fvVectorMatrix> rhoUEqn(fvm::ddt(psi.rhoU()));
+        tmp<fvVectorMatrix> rhoUEqn
+        (
+            fv::ddtScheme<vector>::New
+            (
+                mesh,
+                psi.dictDST().ddtSchemeRhoU()
+            )().fvmDdt(psi.rhoU())
+        );
         DST::insert(s, rhoUEqn->source()-rhoUEqn->diag()*psi.rhoU().internalField(), 1);
         rhoUEqn.clear();
         
-        tmp<fvScalarMatrix> rhoEEqn(fvm::ddt(psi.rhoE()));
+        tmp<fvScalarMatrix> rhoEEqn
+        (
+            fv::ddtScheme<scalar>::New
+            (
+                mesh,
+                psi.dictDST().ddtSchemeRhoE()
+            )().fvmDdt(psi.rhoE())
+        );
         DST::insert(s, rhoEEqn->source()-rhoEEqn->diag()*psi.rhoE().internalField(), 4);
         rhoEEqn.clear();    
         

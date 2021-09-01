@@ -51,7 +51,7 @@ addToRunTimeSelectionTable(iteration, Single, dictionary);
 
 Single::Single
 (
-    const IOdictDST& dict,
+    IOdictDST& dict,
     timeDST& runTime,
     basicThermo& thermo,
     volVectorField& U,

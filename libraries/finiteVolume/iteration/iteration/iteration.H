@@ -84,7 +84,8 @@ private:
     //- Disallow default bitwise assignment
         void operator=(const iteration&);        
 
-    protected:        
+    protected:
+            IOdictDST& dictDST;
             timeDST& runTime_;
             basicThermo& thermo_;
             volVectorField& U_;
@@ -104,7 +105,7 @@ private:
                 iteration,
                 dictionary,
                 (
-                    const IOdictDST& dict,
+                    IOdictDST& dict,
                     timeDST& runTime,
                     basicThermo& thermo,
                     volVectorField& U,
@@ -117,7 +118,7 @@ private:
             //- Construct from components
             iteration
             (
-                const IOdictDST& dict,
+                IOdictDST& dict,
                 timeDST& runTime,
                 basicThermo& thermo,
                 volVectorField& U,
@@ -131,7 +132,7 @@ private:
             //- Selector
             static autoPtr<iteration> New
             (
-                    const IOdictDST& dict,
+                    IOdictDST& dict,
                     timeDST& runTime,
                     basicThermo& thermo,
                     volVectorField& U,
