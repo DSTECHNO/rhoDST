@@ -19,7 +19,7 @@ FoamFile
 
 dependentVariable W; // W or deltaW
 
-fluxScheme  Kurganov;
+fluxScheme  Kurganov; //Kurganov, HLL, HLLC, HLLCP, AUSM+, AUSM+up
 
 Jacobian    Roe;
 
