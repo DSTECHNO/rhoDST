@@ -1,0 +1,38 @@
+/*-----------------------------------------------------------------------------------------*\
+| =========                 |                                                               |
+| \\      /  F ield         | rhoDST: Block-coupled solver for compressible flows           |
+|  \\    /   O peration     |                                                               |
+|   \\  /    A nd           | Copyright (C) 2020 Design and Simulation Tech. Inc. (DSTECH)  |
+|    \\/     M anipulation  | Website:  http://www.dstechno.net/                            |
+\*-----------------------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      rhoDSTDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+dependentVariable W;
+
+fluxScheme  Kurganov;//Kurganov, HLL, HLLC, HLLCP, AUSM+, AUSM+up
+
+Jacobian    Roe;
+
+timeIntegration
+{
+	timeIntegration	Single;
+}
+
+timeControls
+{
+    neighbouring	true;
+    initialCo   	3;
+    minCo		.1;
+    maxCo  	 	30;
+}
+// ************************************************************************* //
