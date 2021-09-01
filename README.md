@@ -14,6 +14,16 @@ This repository provides a density based solver **rhoDST** for steady and unstea
  - Modifications of SpalartAllamaras turbulence model are incorporated to the turbulence libraries. Simpler Rotation-Curvature and Spalart-Shur rotation/curvature correction are implemented to account for rotation and curvature effects.  Negative Spalart-Allmaras is implemented to resolve numerical issues near the interface between turbulent and irrotational regions. 
  - Characteristic far-field boundary conditions are used at the outer boundaries for subsonic, transonic and supersonic freestream flows. 
  
+# Installation Guide
+The dependencies for the solver **rhoDST** are the same as for foam-extend-4.1 and by installing foam-extend-4.1 all dependencies would be satisfies. Before compiling the solver **rhoDST**, environment variables must be set for foam-extend-4.1.
+
+```bash
+cd $WM_PROJECT_USER_DIR
+git clone https://github.com/DSTECHNO/rhoDST rhoDST
+cd rhoDST
+./Allwmake
+```
+
 
 # Developers
 
