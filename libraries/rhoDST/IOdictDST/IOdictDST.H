@@ -48,6 +48,8 @@ SourceFiles
 #define IOdictDST_H
 
 #include "IOdictionary.H"
+#include "fvCFD.H"
+
 
 namespace Foam
 {
@@ -60,20 +62,32 @@ class IOdictDST
     public IOdictionary
 {
     private:
-
+        word forcedSchemeName;
+        ITstream* ddtSchemeRho_;
+        ITstream* ddtSchemeRhoU_;
+        ITstream* ddtSchemeRhoE_;
+        const fvMesh& mesh_;
+        word forcesScheme;
     protected:
-    
+
     public:
-            //- Constructors
+        //- Constructors
             IOdictDST
             (
-                    const IOobject& iodict
+                const IOobject& iodict,
+                const fvMesh& mesh
             );
 
-            //- Destructor
+        //- Destructor
             ~IOdictDST();
 
-            //- Member Functions
+        //- Member Functions
+            void setDdtScheme(word ddtScheme);
+            bool forcedScheme();
+            bool steadyState() const;
+            ITstream& ddtSchemeRho();
+            ITstream& ddtSchemeRhoU();
+            ITstream& ddtSchemeRhoE();
             scalar beta() const;
             word dependentVariable() const;
             word fluxScheme() const;

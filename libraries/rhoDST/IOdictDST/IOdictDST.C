@@ -48,18 +48,81 @@ namespace Foam
 
 IOdictDST::IOdictDST
 (
-    const IOobject& iodict
+    const IOobject& iodict,
+    const fvMesh& mesh
 )
 :
-    IOdictionary(iodict)
-{}
+    IOdictionary(iodict),
+    mesh_(mesh)
+{
+    forcedSchemeName = "default";
+    ddtSchemeRho_ = new ITstream("ddtRho",List<token>(1,token(word(forcedSchemeName),1)));
+    ddtSchemeRhoU_ = new ITstream("ddtRhoU",List<token>(1,token(word(forcedSchemeName),1)));
+    ddtSchemeRhoE_ = new ITstream("ddtRhoE",List<token>(1,token(word(forcedSchemeName),1)));
+}
 
 // * * * * * * * * * * * * * * * * Destructor  * * * * * * * * * * * * * * * //
 
 IOdictDST::~IOdictDST()
-{}
+{
+    if(forcedScheme())
+    {
+        delete ddtSchemeRho_;
+        delete ddtSchemeRhoU_;
+        delete ddtSchemeRhoE_;
+    }
+}
 
 // * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * * //
+
+
+void IOdictDST::setDdtScheme(word ddtScheme)
+{
+    forcedSchemeName = ddtScheme;
+}
+
+bool IOdictDST::forcedScheme()
+{
+    return forcedSchemeName != "default";
+}
+
+bool IOdictDST::steadyState() const
+{
+    return forcedSchemeName == "default" ? word(mesh_.schemesDict().ddtScheme("rho")) == "steadyStateDST" : forcedSchemeName == "steadyStateDST";
+}
+
+ITstream& IOdictDST::ddtSchemeRho()
+{
+    if(forcedScheme())
+    {
+        *ddtSchemeRho_ = ITstream("ddtRho",List<token>(1,token(word(forcedSchemeName),1)));
+        return *ddtSchemeRho_;
+    }
+
+    return mesh_.schemesDict().ddtScheme("rho");
+}
+
+ITstream& IOdictDST::ddtSchemeRhoU()
+{
+    if(forcedScheme())
+    {
+        *ddtSchemeRhoU_ = ITstream("ddtRhoU",List<token>(1,token(word(forcedSchemeName),1)));
+        return *ddtSchemeRhoU_;
+    }
+
+    return mesh_.schemesDict().ddtScheme("rhoU");
+}
+
+ITstream& IOdictDST::ddtSchemeRhoE()
+{
+    if(forcedScheme())
+    {
+        *ddtSchemeRhoE_ = ITstream("ddtRhoE",List<token>(1,token(word(forcedSchemeName),1)));
+        return *ddtSchemeRhoE_;
+    }
+
+    return mesh_.schemesDict().ddtScheme("rhoE");
+}
 
 scalar IOdictDST::beta() const
 {
