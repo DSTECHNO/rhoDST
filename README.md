@@ -39,9 +39,8 @@ cd rhoDST
 
 # Developers
 
-- Ender Demirel, PhD
-
 - Aras Dogan
+- Prof.Dr. Ender Demirel
 
 # License
 Copyright 2020 Design and Simulation Technologies Inc. 
