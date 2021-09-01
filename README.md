@@ -23,6 +23,18 @@ git clone https://github.com/DSTECHNO/rhoDST rhoDST
 cd rhoDST
 ./Allwmake
 ```
+# Examples
+* Supersonic unsteady flow over forward facing step for Ma = 3 
+![forwardStep](https://user-images.githubusercontent.com/89465885/131667112-8ceb06f2-2cd3-424a-bf13-3c9acdb56dd0.png)
+
+* A steady-state simulation of transonic RAE2822 case for Ma = 0.7
+![pressure](https://user-images.githubusercontent.com/89465885/131667405-db903eff-9901-481e-b589-f4aba4e09966.png)
+
+
+* A steady-state simulation of a transonic full aircraft model for Ma = 0.9
+
+![mesh](https://user-images.githubusercontent.com/89465885/131667919-018a8a7f-f218-4d2b-a677-4a5eb141a59f.png) |  ![nut](https://user-images.githubusercontent.com/89465885/131667922-820729ee-6d01-4dc7-acb1-1374a36cfb6e.png)
+--- | ---
 
 
 # Developers
