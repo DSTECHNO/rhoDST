@@ -91,7 +91,7 @@ class AUSMPLDST
         //- constructor
         AUSMPLDST
         (
-            const IOdictDST& dict,
+            const IOdictionary& dict,
             const fvMesh& mesh,
             basicThermo& thermo,
             const volScalarField& rho,

@@ -62,15 +62,15 @@ addToRunTimeSelectionTable(baseFluxDST, HLLCDST, dictionary);
 
 HLLCDST::HLLCDST
 (
-    const IOdictDST& dict,
-        const fvMesh& mesh,
-        basicThermo& thermo,
-        const volScalarField& rho,
-        volVectorField& U,
-        const volVectorField& rhoU,
-        const volScalarField& rhoE,
-        compressible::turbulenceModel& turbulence,
-        surfaceScalarField& phi
+    const IOdictionary& dict,
+    const fvMesh& mesh,
+    basicThermo& thermo,
+    const volScalarField& rho,
+    volVectorField& U,
+    const volVectorField& rhoU,
+    const volScalarField& rhoE,
+    compressible::turbulenceModel& turbulence,
+    surfaceScalarField& phi
 )
 :
     baseFluxDST

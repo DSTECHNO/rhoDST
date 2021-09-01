@@ -82,33 +82,33 @@ class AUSMPLUPDST
     private: 
         //- Empirical coefficients suggested by Liou        
             const scalar beta_ = 0.125; 
-        const scalar Kp_ = 0.25; 
-        const scalar Ku_ = 0.75;
-        const scalar sigma_=1.0;
+            const scalar Kp_ = 0.25; 
+            const scalar Ku_ = 0.75;
+            const scalar sigma_=1.0;
 
         //- low Mach number dissipation in AUSM+up
-        scalar Mainf;
-        bool lowMach;
+            scalar Mainf;
+            bool lowMach;
 
     public:
         //- Runtime type information
             TypeName("AUSM+up");
 
         //- Surface variable reference to owner cell
-                surfaceScalarField own_;
+            surfaceScalarField own_;
         //- Surface variable reference to neighbour cell
-        surfaceScalarField nei_;
+            surfaceScalarField nei_;
 
         //- public functions
 
         //- constructor
-        AUSMPLUPDST
+            AUSMPLUPDST
             (
-                    const IOdictDST& dict,
+                const IOdictionary& dict,
                 const fvMesh& mesh,
                 basicThermo& thermo,
                 const volScalarField& rho,
-               volVectorField& U,
+                volVectorField& U,
                 const volVectorField& rhoU,
                 const volScalarField& rhoE,
                 compressible::turbulenceModel& turbulence,

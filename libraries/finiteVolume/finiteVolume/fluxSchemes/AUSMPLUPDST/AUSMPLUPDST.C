@@ -59,32 +59,34 @@ addToRunTimeSelectionTable(baseFluxDST, AUSMPLUPDST, dictionary);
 
 AUSMPLUPDST::AUSMPLUPDST
 (
-    const IOdictDST& dict,
-        const fvMesh& mesh,
-        basicThermo& thermo,
-        const volScalarField& rho,
-        volVectorField& U,
-        const volVectorField& rhoU,
-        const volScalarField& rhoE,
-        compressible::turbulenceModel& turbulence,
-        surfaceScalarField& phi
+    const IOdictionary& dict,
+    const fvMesh& mesh,
+    basicThermo& thermo,
+    const volScalarField& rho,
+    volVectorField& U,
+    const volVectorField& rhoU,
+    const volScalarField& rhoE,
+    compressible::turbulenceModel& turbulence,
+    surfaceScalarField& phi
 )
 :
     baseFluxDST
     (
-            typeName, 
-            dict, 
-            mesh,
-            thermo, 
-            rho, 
-            U, 
-            rhoU, 
-            rhoE, 
-            turbulence,
-            phi
+        typeName, 
+        dict, 
+        mesh,
+        thermo, 
+        rho, 
+        U, 
+        rhoU, 
+        rhoE, 
+        turbulence,
+        phi
     ),
 
-    own_(surfaceScalarField
+    own_
+    (
+        surfaceScalarField
         (
             IOobject
             (
@@ -94,9 +96,12 @@ AUSMPLUPDST::AUSMPLUPDST
             ),
             mesh_,
             dimensionedScalar("own", dimless, 1.0)
-        )),
+        )
+    ),
 
-        nei_(surfaceScalarField
+    nei_
+    (
+        surfaceScalarField
         (
             IOobject
             (
@@ -106,7 +111,8 @@ AUSMPLUPDST::AUSMPLUPDST
             ),
             mesh_,
             dimensionedScalar("neg", dimless, -1.0)
-        ))
+        )
+    )
 
 {
     alpha = tmp<surfaceScalarField>

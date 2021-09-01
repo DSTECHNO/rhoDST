@@ -55,7 +55,7 @@ addToRunTimeSelectionTable(baseFluxDST, KurganovDST, dictionary);
 
 KurganovDST::KurganovDST
 (
-    const IOdictDST& dict,
+    const IOdictionary& dict,
     const fvMesh& mesh,
     basicThermo& thermo,
     const volScalarField& rho,

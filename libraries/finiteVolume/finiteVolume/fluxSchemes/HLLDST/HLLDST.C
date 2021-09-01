@@ -55,7 +55,7 @@ addToRunTimeSelectionTable(baseFluxDST, HLLDST, dictionary);
 
 HLLDST::HLLDST
 (
-    const IOdictDST& dict,
+    const IOdictionary& dict,
     const fvMesh& mesh,
     basicThermo& thermo,
     const volScalarField& rho,
