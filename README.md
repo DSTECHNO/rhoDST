@@ -24,7 +24,7 @@ cd rhoDST
 ./Allwmake
 ```
 # Examples
-* Unsteady simulation of supersonic flow over a forward facing step for Ma = 3 
+* Transient simulation of supersonic flow over a forward facing step for Ma = 3 
 ![forwardStep](https://user-images.githubusercontent.com/89465885/131667112-8ceb06f2-2cd3-424a-bf13-3c9acdb56dd0.png)
 
 * Steady-state simulation of transonic flow over RAE2822 airfoil for Ma = 0.7
