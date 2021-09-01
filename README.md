@@ -25,7 +25,7 @@ cd rhoDST
 ```
 # Examples
 * Transient simulation of supersonic flow over a forward facing step for Ma = 3 
-![forwardStep](https://user-images.githubusercontent.com/89465885/131667112-8ceb06f2-2cd3-424a-bf13-3c9acdb56dd0.png)
+![bfs](https://user-images.githubusercontent.com/30440239/131734244-9f159e29-19da-4087-aebf-21270e1e7633.png)
 
 * Steady-state simulation of transonic flow over RAE2822 airfoil for Ma = 0.7
 ![pressure](https://user-images.githubusercontent.com/89465885/131667405-db903eff-9901-481e-b589-f4aba4e09966.png)
