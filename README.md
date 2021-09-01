@@ -2,6 +2,8 @@
 
 # rhoDST
 This repository provides a density based solver **rhoDST** for steady and unsteady simulation of high speed compressible flows over aeronautical vehicles. The proposed solver **rhoDST** has been developed based on  foam-extend 4.1  libraries for the fully-coupled solution of governing equations on highly skewed unstructured meshes. 
+
+![BG1](https://user-images.githubusercontent.com/30440239/131627275-4d343da5-bcdc-4502-8275-a7f8de4ea75a.jpg)
  
 
 # Features
