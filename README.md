@@ -33,6 +33,8 @@ cd rhoDST
 * Steady-state simulation of transonic flow over RAE2822 airfoil for Ma = 0.729
 ![pressure](https://user-images.githubusercontent.com/89465885/131667405-db903eff-9901-481e-b589-f4aba4e09966.png)
 
+* Steady-state simulation of transonic flow over ONERA M6 Wing for Ma = 0.8395
+![onera](https://user-images.githubusercontent.com/30440239/131879893-f28399bb-7e10-4537-a0e5-99221c805d0f.png)
 
 * Steady-state simulation of transonic flow over a full aircraft model for Ma = 0.9
 
