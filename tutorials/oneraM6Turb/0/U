@@ -1,0 +1,46 @@
+/*-----------------------------------------------------------------------------------------*\
+| =========                 |                                                               |
+| \\      /  F ield         | rhoDST: Block-coupled solver for compressible flows           |
+|  \\    /   O peration     |                                                               |
+|   \\  /    A nd           | Copyright (C) 2020 Design and Simulation Tech. Inc. (DSTECH)  |
+|    \\/     M anipulation  | Website:  http://www.dstechno.net/                            |
+\*-----------------------------------------------------------------------------------------*/
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+    class           volVectorField;
+    object          U;
+}
+
+// *************************************************************************************** //
+
+include         "include/freestreamConditions"
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform $UInf;
+
+boundaryField
+{
+    wing
+    {
+        type            fixedValue;
+        value           uniform (0 0 0);
+    }
+
+    farfield
+    {
+        type            farFieldVelocityDST;
+        #include        "include/freestreamConditions"
+        value           uniform (0 0 0);
+    }
+
+    symm
+    {
+        type            symmetryPlane;
+    }   
+}
+
+
+// *************************************************************************************** //

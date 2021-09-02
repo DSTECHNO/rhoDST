@@ -1,0 +1,91 @@
+/*-----------------------------------------------------------------------------------------*\
+| =========                 |                                                               |
+| \\      /  F ield         | rhoDST: Block-coupled solver for compressible flows           |
+|  \\    /   O peration     |                                                               |
+|   \\  /    A nd           | Copyright (C) 2020 Design and Simulation Tech. Inc. (DSTECH)  |
+|    \\/     M anipulation  | Website:  http://www.dstechno.net/                            |
+\*-----------------------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// *************************************************************************************** //
+
+libs
+(
+    "libcompressibleRASModels.so"
+    "liblduSolvers.so"
+);
+
+application     rhoDST205;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         20000;
+
+deltaT          1;
+
+writeControl    runTime;
+
+writeInterval   100; 
+
+purgeWrite      2;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+adjustTimeStep  yes;
+
+initialCo	10;
+
+maxCo          500; 
+
+maxDeltaT       2e-2;
+
+rDeltaTSmoothingCoeff 0.1;
+
+
+functions
+{
+    forces
+    {
+        type            	forceCoeffs;
+        functionObjectLibs  	( "libforces.so" );
+        outputControl   	timeStep;
+        outputInterval 		1;
+        patches         	( wing );
+        pName               	p;
+        UName               	U;
+        log             	true;
+        rhoInf          	4.30878;
+        rho             	rhoInf;
+        CofR            	( 0 0 0 );
+        liftDir             	(-0.0533816898 0.9985741811 0);
+	dragDir             	( 0.9985741811 0.0533816898 0);
+         
+        pitchAxis      	 	(0 0 1);
+        magUInf         	268.991;
+        lRef            	1;
+        Aref            	1;
+    }   
+}
+
+
+// *************************************************************************************** //
