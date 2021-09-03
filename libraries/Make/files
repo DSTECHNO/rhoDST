@@ -20,6 +20,7 @@ finiteVolume/jacobian/Roe/Roe.C
 rhoDST/IOdictDST/IOdictDST.C
 
 finiteVolume/finiteVolume/timeIntegration/steadyStateDST/steadyStateDSTs.C
+finiteVolume/finiteVolume/timeIntegration/dual2ndDST/dual2ndDSTs.C
 
 
 finiteVolume/finiteVolume/timeIntegration/fluxDST/fluxDSTIntegration/fluxDSTIntegrations.C
@@ -31,6 +32,7 @@ finiteVolume/iteration/iteration/iteration.C
 finiteVolume/iteration/iteration/newIteration.C
 
 finiteVolume/iteration/Single/Single.C
+finiteVolume/iteration/Dual/Dual.C
 
 turbulence/SARC1/SARC1.C
 turbulence/SARC2/SARC2.C
