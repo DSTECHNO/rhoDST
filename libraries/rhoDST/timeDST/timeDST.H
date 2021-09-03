@@ -97,7 +97,6 @@ class timeDST
             autoPtr<volVectorField> dS;
             bool neighbouring;
 
-            bool steadyState;
             int innerIter;
             int maxInnerIter;        
                 
@@ -121,10 +120,11 @@ class timeDST
             );
 
             bool correctTurbulence();
+            bool steadyState();
             scalar coNum();
             void setTransientDeltaT();
             void setSteadyStateDeltaT();
-            void setCourantDST();
+            void setCourantDST(const BlockSolverPerformance<vector5>* solverPerf = nullptr);
             bool localTimeStepping();
             const scalarField& rDeltaTDST() const;
             int nIter() const;

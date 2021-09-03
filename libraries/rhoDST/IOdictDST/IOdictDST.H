@@ -90,6 +90,7 @@ class IOdictDST
             ITstream& ddtSchemeRhoE();
             scalar beta() const;
             bool innerCorrectTurbulence() const;
+            bool dualTime() const;
             bool adjustTimeStep() const;
             word dependentVariable() const;
             word fluxScheme() const;

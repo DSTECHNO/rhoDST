@@ -139,6 +139,11 @@ bool IOdictDST::adjustTimeStep() const
     return timeIntegrationDict().lookupOrDefault<bool>("adjustTimeStep",false);
 }
 
+bool IOdictDST::dualTime() const
+{
+    return timeIntegration() == "Dual";
+}
+
 word IOdictDST::dependentVariable() const
 {
     return this->lookupOrDefault<word>("dependentVariable","W");

@@ -307,15 +307,24 @@ void timeDST::setTransientDeltaT()
     }    
 }
 
-void timeDST::setCourantDST()
+void timeDST::setCourantDST(const BlockSolverPerformance<vector5>* solverPerf)
 {
     const fvMesh& mesh = UPtr->mesh();
-    const volVector5Field& R = mesh.lookupObject<volVector5Field>("R_");
-    volScalarField magR = mag(R);
-    
-    scalar residualR = sqrt(gSumSqr(magR));
+    scalar residualR = 0;
+    if(solverPerf)
+    {
+        const BlockSolverPerformance<vector5>& sP = *solverPerf;
+        
+        residualR = mag(sP.initialResidual());
+    }
+    else
+    {
+        const volVector5Field& R = mesh.lookupObject<volVector5Field>("R_");
+        volScalarField magR = mag(R);
+        
+        residualR = sqrt(gSumSqr(magR));
+    }
     Info<<"residualR = "<<residualR<<endl;
-
     if(timeIndex_ != 1)
     {
         residualRatio = 
@@ -333,7 +342,7 @@ void timeDST::setCourantDST()
     }
     residual = residualR;    
     
-    if (dictPtr->steadyState())
+    if (steadyState())
     {
         const volScalarField& rho = mesh.lookupObject<volScalarField>("rho");
         const volVectorField& rhoU = mesh.lookupObject<volVectorField>("rhoU");
@@ -399,35 +408,43 @@ void timeDST::setCourantDST()
             )
         );
         
-        Info<<"minCourant = "<<min(courantPtr()).value()
-            <<" maxCourant = "<<max(courantPtr()).value()
-            <<" meanCo = "<<sum(courantPtr()).value()/mesh.globalData().nTotalCells()<<endl;
+        Info<<"minCourant = "<<gMin(courantPtr->internalField())
+            <<" maxCourant = "<<gMax(courantPtr->internalField())
+            <<" meanCo = "<<gSum(courantPtr->internalField())/mesh.globalData().nTotalCells()<<endl;
         setSteadyStateDeltaT();
     }
     else
     {
-        courant  = 
-        (
-            min
+        if(dictPtr->adjustTimeStep())
+        {
+            courant  = 
             (
-                max
+                min
                 (
-                    courant*residualRatio,
-                    minCo
-                ),
-                maxCo
-            )
-        );
-        setTransientDeltaT();
+                    max
+                    (
+                        courant*residualRatio,
+                        minCo
+                    ),
+                    maxCo
+                )
+            );
+            setTransientDeltaT();
+        }
         Info<<"Courant = "<<courant<<", deltaT = "<<deltaTValue()<<endl;
-            courantPtr->internalField() = 2.0/3*courant;
+        //courantPtr->internalField() = dictPtr->initialCo();
+        innerIter = 0;
     }
-    innerIter = 0;
 }
 
 bool timeDST::localTimeStepping()
 {
     return dictPtr->steadyState();
+}
+
+bool timeDST::steadyState()
+{
+    return (dictPtr->steadyState() || (dictPtr->dualTime() && (innerIter < maxInnerIter)));
 }
 
 bool timeDST::correctTurbulence()
@@ -453,6 +470,7 @@ scalar timeDST::coNum()
 bool timeDST::innerLoop()
 {
     innerIter++;
+    Info<<"Inner Iteration: "<<innerIter<<endl;
     return 
     (
         innerIter < maxInnerIter
