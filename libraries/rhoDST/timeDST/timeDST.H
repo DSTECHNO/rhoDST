@@ -120,6 +120,7 @@ class timeDST
                 volVectorField& U
             );
 
+            bool correctTurbulence();
             scalar coNum();
             void setTransientDeltaT();
             void setSteadyStateDeltaT();

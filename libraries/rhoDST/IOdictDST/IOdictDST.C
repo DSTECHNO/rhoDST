@@ -129,6 +129,11 @@ scalar IOdictDST::beta() const
     return timeIntegrationDict().lookupOrDefault<scalar>("beta",1);
 }
 
+bool IOdictDST::innerCorrectTurbulence() const
+{
+    return timeIntegrationDict().lookupOrDefault<bool>("innerCorrectTurbulence",false);
+}
+
 word IOdictDST::dependentVariable() const
 {
     return this->lookupOrDefault<word>("dependentVariable","W");

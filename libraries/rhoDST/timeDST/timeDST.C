@@ -429,6 +429,12 @@ bool timeDST::localTimeStepping()
 {
     return dictPtr->steadyState();
 }
+
+bool timeDST::correctTurbulence()
+{
+    return ((innerIter < maxInnerIter) == dictPtr->innerCorrectTurbulence());
+}
+
 const scalarField& timeDST::rDeltaTDST() const
 {
     return rDeltaTDSTPtr->internalField();
