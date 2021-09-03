@@ -153,6 +153,7 @@ void timeDST::initialize
         dS() *= 0.5;
     }
 
+    residual = -1;
     residualRatio = 1;
 
     maxCo = dictPtr->maxCo();
@@ -178,7 +179,7 @@ void timeDST::initialize
     );
 
     innerIter = 0;
-    maxInnerIter = dictPtr->lookupOrDefault<int>("maxIter", 10);
+    maxInnerIter = dictPtr->timeIntegrationDict().lookupOrDefault<int>("maxInnerIter", 10);
 
     rDeltaTDSTPtr = autoPtr<volScalarField>
     (
@@ -324,8 +325,7 @@ void timeDST::setCourantDST(const BlockSolverPerformance<vector5>* solverPerf)
         
         residualR = sqrt(gSumSqr(magR));
     }
-    Info<<"residualR = "<<residualR<<endl;
-    if(timeIndex_ != 1)
+    if(residual != -1)
     {
         residualRatio = 
         (
@@ -431,7 +431,8 @@ void timeDST::setCourantDST(const BlockSolverPerformance<vector5>* solverPerf)
             );
             setTransientDeltaT();
         }
-        Info<<"Courant = "<<courant<<", deltaT = "<<deltaTValue()<<endl;
+        if(!dictPtr->dualTime())
+            Info<<"Courant = "<<courant<<endl;
         //courantPtr->internalField() = dictPtr->initialCo();
         innerIter = 0;
     }
@@ -459,7 +460,7 @@ const scalarField& timeDST::rDeltaTDST() const
 
 int timeDST::nIter() const
 {
-    return innerIter;
+    return innerIter+1;
 }
 
 scalar timeDST::coNum()
@@ -470,7 +471,6 @@ scalar timeDST::coNum()
 bool timeDST::innerLoop()
 {
     innerIter++;
-    Info<<"Inner Iteration: "<<innerIter<<endl;
     return 
     (
         innerIter < maxInnerIter
