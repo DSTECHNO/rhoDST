@@ -131,7 +131,7 @@ Foam::BlockSolverPerformance<Type> fvBlockMatrixDST<Type>::solve
 
         return solverPerf;
     }
-    else if(psiName=="deltaW")
+    else
     {
         dictionary solverControls(psi_.mesh().solutionDict().solverDict(psi_.delta().name()));
       
