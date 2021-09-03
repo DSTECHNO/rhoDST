@@ -84,9 +84,12 @@ void Dual::iterate
     volScalarField& rhoE
 )
 {
-    Info<<"Time: "<<runTime_.timeName()<<", deltaT = "<<runTime_.deltaTValue()<<endl;
+    Info<<"Time: "<<runTime_.timeName()
+        <<", deltaT = "<<runTime_.deltaTValue()
+        <<", Courant = "<<runTime_.coNum()<<endl;
     do
     {
+        Info<<"Inner Iteration: "<<runTime_.nIter()<<endl;
         rhoDSTFlux_.computeFluxDST();
         
         tmp<fvBlockMatrixDST<vector5>> tEqn
@@ -109,6 +112,8 @@ void Dual::iterate
     
     if(runTime_.correctTurbulence())
         turbulence_.correct();
+    
+    runTime_.setCourantDST();
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

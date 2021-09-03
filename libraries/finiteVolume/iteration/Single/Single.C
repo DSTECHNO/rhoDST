@@ -84,7 +84,8 @@ void Single::iterate
     volScalarField& rhoE
 )
 {
-    Info<<"Time: "<<runTime_.timeName()<<", deltaT = "<<runTime_.deltaTValue()<<endl;
+    Info<<"Time: "<<runTime_.timeName()
+        <<", deltaT = "<<runTime_.deltaTValue()<<endl;
     rhoDSTFlux_.computeFluxDST();
     
     tmp<fvBlockMatrixDST<vector5>> tEqn
