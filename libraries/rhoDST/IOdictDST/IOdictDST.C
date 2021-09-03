@@ -134,6 +134,11 @@ bool IOdictDST::innerCorrectTurbulence() const
     return timeIntegrationDict().lookupOrDefault<bool>("innerCorrectTurbulence",false);
 }
 
+bool IOdictDST::adjustTimeStep() const
+{
+    return timeIntegrationDict().lookupOrDefault<bool>("adjustTimeStep",false);
+}
+
 word IOdictDST::dependentVariable() const
 {
     return this->lookupOrDefault<word>("dependentVariable","W");
