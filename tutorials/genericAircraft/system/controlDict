@@ -1,0 +1,76 @@
+/*-----------------------------------------------------------------------------------------*\
+| =========                 |                                                               |
+| \\      /  F ield         | rhoDST: Block-coupled solver for compressible flows           |
+|  \\    /   O peration     |                                                               |
+|   \\  /    A nd           | Copyright (C) 2020 Design and Simulation Tech. Inc. (DSTECH)  |
+|    \\/     M anipulation  | Website:  http://www.dstechno.net/                            |
+\*-----------------------------------------------------------------------------------------*/
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+    class           dictionary;
+    location        "system";
+    object          controlDict;
+}
+// *************************************************************************************** //
+
+application       rhoDST;
+
+startFrom         latestTime;
+
+startTime         0;
+
+stopAt            endTime;
+
+endTime           5000;
+
+deltaT            1;
+
+writeControl      timeStep;
+
+writeInterval     100;
+
+purgeWrite        2;
+
+writeFormat       ascii;
+
+writePrecision    6;
+
+writeCompression  off;
+
+timeFormat        general;
+
+timePrecision     6;
+
+graphFormat       raw;
+
+runTimeModifiable yes;
+
+functions
+{
+  forces
+    {
+        type            	forceCoeffs;
+        functionObjectLibs  	( "libforces.so" );
+        outputControl   	timeStep;
+        outputInterval 		10;
+        patches         	( aircraft );
+        pName               	p;
+        UName               	U;
+        log             	true;
+        rhoInf          	1.225;
+        rho             	rhoInf;
+        CofR            	(5.596 0 0.058);
+        liftDir             	(-0.258819045102521 0 0.965925826289068);
+	dragDir             	(0.965925826289068 0 0.258819045102521);
+        
+        pitchAxis      	 	(0 1 0);
+        magUInf         	288.398028640436000;
+        lRef            	2.503;
+        Aref            	14.65;
+    }   
+}
+
+
+// *************************************************************************************** //

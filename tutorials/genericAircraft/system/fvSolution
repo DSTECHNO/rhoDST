@@ -1,0 +1,58 @@
+/*-----------------------------------------------------------------------------------------*\
+| =========                 |                                                               |
+| \\      /  F ield         | rhoDST: Block-coupled solver for compressible flows           |
+|  \\    /   O peration     |                                                               |
+|   \\  /    A nd           | Copyright (C) 2020 Design and Simulation Tech. Inc. (DSTECH)  |
+|    \\/     M anipulation  | Website:  http://www.dstechno.net/                            |
+\*-----------------------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+// *************************************************************************************** //
+
+solvers
+{
+    W
+    {
+        solver          GMRES;
+        preconditioner  ILUC0;
+        minIter         1;
+        maxIter         100;
+	nDirections	8;
+        tolerance       1e-15;
+        relTol          1e-4;
+    }
+
+    nuTilda
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-10;
+        relTol          1e-1;
+        minIter         1;
+    }
+}
+
+relaxationFactors
+{
+    equations
+    {
+        nuTilda         0.5;
+        yWall           0.7;
+    }
+}
+
+fieldBounds
+{
+    rho 0.01 10;
+    p   100 5e6;
+    T   10 800;
+}
+
+
+// *************************************************************************************** //
