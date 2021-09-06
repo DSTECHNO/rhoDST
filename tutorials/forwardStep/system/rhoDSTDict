@@ -30,6 +30,7 @@ timeIntegration
 
 timeControls
 {
+    adjustTimeStep  true;// for transient simulations
     neighbouring	true;
     initialCo   	3;
     minCo		.1;
