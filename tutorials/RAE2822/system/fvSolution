@@ -24,7 +24,7 @@ solvers
         solver          BiCGStab;
         preconditioner  ILUC0;
         minIter         1;
-        maxIter         1;
+        maxIter         100;
         tolerance       1e-10;
         relTol          1e-10;
     }
