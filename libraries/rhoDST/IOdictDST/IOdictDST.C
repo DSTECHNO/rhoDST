@@ -136,7 +136,7 @@ bool IOdictDST::innerCorrectTurbulence() const
 
 bool IOdictDST::adjustTimeStep() const
 {
-    return timeControlsDict().lookupOrDefault<bool>("adjustTimeStep",false);
+    return timeControlsDict().lookupOrDefault<bool>("adjustTimeStep",true);
 }
 
 bool IOdictDST::dualTime() const
