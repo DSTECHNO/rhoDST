@@ -169,6 +169,11 @@ const dictionary& IOdictDST::timeControlsDict() const
     return this->subDict("timeControls");
 }
 
+const dictionary& IOdictDST::residualControlsDict() const
+{
+    return this->subDict("residualControls");
+}
+
 word IOdictDST::timeIntegration() const
 {
     return timeIntegrationDict().lookupOrDefault<word>("timeIntegration","Single");
@@ -192,6 +197,31 @@ scalar IOdictDST::minCo() const
 scalar IOdictDST::maxCo() const
 {
     return timeControlsDict().lookupOrDefault<scalar>("maxCo",50);
+}
+
+int IOdictDST::iterationStart() const
+{
+    int val = 0;
+    if(steadyState())
+        val = 500;
+    else
+        val = 10;
+    return residualControlsDict().lookupOrDefault<int>("iterationStart",val);
+}
+
+scalar IOdictDST::magConvergedSlope() const
+{
+    return residualControlsDict().lookupOrDefault<scalar>("magConvergedSlope",.1);
+}
+
+scalar IOdictDST::minResudual() const
+{
+    return residualControlsDict().lookupOrDefault<scalar>("minResudual",1e-5);
+}
+
+int IOdictDST::maxInnerIter() const
+{
+    return timeIntegrationDict().lookupOrDefault<int>("maxInnerIter",20);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

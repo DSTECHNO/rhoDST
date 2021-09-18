@@ -87,9 +87,14 @@ void Dual::iterate
     Info<<"Time: "<<runTime_.timeName()
         <<", deltaT = "<<runTime_.deltaTValue()
         <<", Courant = "<<runTime_.coNum()<<endl;
+    
+    residualControls pseudeSystemResiduals(W);
+    
+    runTime_.setResidualControls(pseudeSystemResiduals);
+    
     do
     {
-        Info<<"Inner Iteration: "<<runTime_.nIter()<<endl;
+        Info<<"Inner Iteration: "<<pseudeSystemResiduals.nIter()<<endl;
         rhoDSTFlux_.computeFluxDST();
         
         tmp<fvBlockMatrixDST<vector5>> tEqn
@@ -106,9 +111,11 @@ void Dual::iterate
         if(runTime_.correctTurbulence())
             turbulence_.correct();
         
+        pseudeSystemResiduals.addResidual(solverPerf.initialResidual());
+        
         runTime_.setCourantDST(&solverPerf);
     }
-    while(runTime_.innerLoop());
+    while(!pseudeSystemResiduals.converged());
     
     if(runTime_.correctTurbulence())
         turbulence_.correct();

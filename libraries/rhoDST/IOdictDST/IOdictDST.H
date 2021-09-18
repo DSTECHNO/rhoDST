@@ -97,11 +97,16 @@ class IOdictDST
             word Jacobian() const;
             const dictionary& timeIntegrationDict() const;
             const dictionary& timeControlsDict() const;
+            const dictionary& residualControlsDict() const;
             word timeIntegration() const;
             bool neighbouring() const;
             scalar initialCo() const;
             scalar minCo() const;
             scalar maxCo() const;
+            int iterationStart() const;
+            scalar magConvergedSlope() const;
+            scalar minResudual() const;
+            int maxInnerIter() const;
 };
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 }

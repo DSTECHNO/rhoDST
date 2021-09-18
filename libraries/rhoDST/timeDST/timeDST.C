@@ -178,9 +178,6 @@ void timeDST::initialize
         )
     );
 
-    innerIter = 0;
-    maxInnerIter = dictPtr->timeIntegrationDict().lookupOrDefault<int>("maxInnerIter", 10);
-
     rDeltaTDSTPtr = autoPtr<volScalarField>
     (
         new volScalarField
@@ -208,6 +205,14 @@ void timeDST::initialize
         courantPtr->internalField() = courant;
         setSteadyStateDeltaT();
     }
+}
+
+
+
+
+void timeDST::setResidualControls(const residualControls& rC)
+{
+    rC_ = &rC;
 }
 
 void timeDST::setSteadyStateDeltaT()
@@ -342,7 +347,7 @@ void timeDST::setCourantDST(const BlockSolverPerformance<vector5>* solverPerf)
     }
     residual = residualR;    
     
-    if (steadyState())
+    if (dictPtr->steadyState() || (rC_? !rC_->converged():false))
     {
         const volScalarField& rho = mesh.lookupObject<volScalarField>("rho");
         const volVectorField& rhoU = mesh.lookupObject<volVectorField>("rhoU");
@@ -434,7 +439,6 @@ void timeDST::setCourantDST(const BlockSolverPerformance<vector5>* solverPerf)
         if(!dictPtr->dualTime())
             Info<<"Courant = "<<courant<<endl;
         //courantPtr->internalField() = dictPtr->initialCo();
-        innerIter = 0;
     }
 }
 
@@ -443,24 +447,9 @@ bool timeDST::localTimeStepping()
     return dictPtr->steadyState();
 }
 
-bool timeDST::steadyState()
-{
-    return (dictPtr->steadyState() || (dictPtr->dualTime() && (innerIter < maxInnerIter)));
-}
-
-bool timeDST::correctTurbulence()
-{
-    return ((innerIter < maxInnerIter) == dictPtr->innerCorrectTurbulence());
-}
-
 const scalarField& timeDST::rDeltaTDST() const
 {
     return rDeltaTDSTPtr->internalField();
-}
-
-int timeDST::nIter() const
-{
-    return innerIter+1;
 }
 
 scalar timeDST::coNum()
@@ -468,14 +457,9 @@ scalar timeDST::coNum()
     return courant;
 }
 
-bool timeDST::innerLoop()
+bool timeDST::correctTurbulence()
 {
-    innerIter++;
-    return 
-    (
-        innerIter < maxInnerIter
-    );
+    return (!rC_->converged() == dictPtr->innerCorrectTurbulence());
 }
-
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 } // End namespace Foam

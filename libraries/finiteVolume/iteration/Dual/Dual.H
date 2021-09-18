@@ -52,7 +52,7 @@ SourceFiles
 #define Dual_H
 
 #include "iteration.H"
-
+#include "residualControls.H"
 namespace Foam
 {
 

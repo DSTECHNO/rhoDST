@@ -65,10 +65,12 @@ SourceFiles
 #include "fvmDST.H"
 #include "DST.H"
 #include "bound.H"
+#include "residualControls.H"
 
 namespace Foam
 {
 
+class residualControls;
 /*---------------------------------------------------------------------------*\
                            Class timeDST Declaration
 \*---------------------------------------------------------------------------*/
@@ -96,10 +98,8 @@ class timeDST
             // blazek courant
             autoPtr<volVectorField> dS;
             bool neighbouring;
-
-            int innerIter;
-            int maxInnerIter;        
                 
+           const residualControls* rC_;
     public:
             //- Constructors
             timeDST
@@ -119,16 +119,14 @@ class timeDST
                 volVectorField& U
             );
 
-            bool correctTurbulence();
-            bool steadyState();
             scalar coNum();
+            void setResidualControls(const residualControls& rC);
             void setTransientDeltaT();
             void setSteadyStateDeltaT();
             void setCourantDST(const BlockSolverPerformance<vector5>* solverPerf = nullptr);
             bool localTimeStepping();
             const scalarField& rDeltaTDST() const;
-            int nIter() const;
-            bool innerLoop();
+            bool correctTurbulence();
 };
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 } // End namespace rhoDST

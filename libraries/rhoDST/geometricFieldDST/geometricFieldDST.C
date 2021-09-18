@@ -114,6 +114,12 @@ IOdictDST& geometricFieldDST<Type>::dictDST()
     return dictDST_;
 }
 
+template<class Type>
+const IOdictDST& geometricFieldDST<Type>::dictDST() const
+{
+    return dictDST_;
+}
+
 
 
 template<class Type>

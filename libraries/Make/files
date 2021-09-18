@@ -18,6 +18,7 @@ finiteVolume/jacobian/JacobianDST/JacobianDSTs.C
 finiteVolume/jacobian/Roe/Roe.C
 
 rhoDST/IOdictDST/IOdictDST.C
+rhoDST/residualControls/residualControls.C
 
 finiteVolume/finiteVolume/timeIntegration/steadyStateDST/steadyStateDSTs.C
 finiteVolume/finiteVolume/timeIntegration/dual2ndDST/dual2ndDSTs.C

@@ -94,6 +94,7 @@ class geometricFieldDST
             //- Member Functions
                 timeDST& runTime();
                 IOdictDST& dictDST();
+                const IOdictDST& dictDST() const;
                 GeometricField<Type, Foam::fvPatchField, Foam::volMesh>& delta();
 
                 template<class fType>
