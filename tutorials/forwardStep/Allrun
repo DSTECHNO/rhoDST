@@ -6,8 +6,9 @@ cd ${0%/*} || exit 1    # Run from this directory
 
 # Get application directory
 
+runApplication blockMesh
 runApplication decomposePar
-runParallel rhoDST 8
+runParallel rhoDST 4
 
 runApplication reconstructPar 
 
