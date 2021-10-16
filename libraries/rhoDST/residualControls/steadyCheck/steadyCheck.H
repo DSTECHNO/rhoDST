@@ -38,96 +38,47 @@ Author:
                                       
 
 Class
-    rhoDST::timeDST
-
-Description
-    Time class for rhoDST
+    steadyCheck
 
 SourceFiles
-    timeDST.C
+    steadyCheck.H
 
-   
 \*---------------------------------------------------------------------------*/
+#ifndef steadyCheck_H
+#define steadyCheck_H
 
-#ifndef timeDST_H
-#define timeDST_H
+#include "residualControls.H"
 
-#include "IOdictionary.H"
-#include "volFields.H"
-#include "fvCFD.H"
-#include "Vector5typedefs.H"
-#include "fvBlockMatrix.H"
-#include "basicPsiThermo.H"
-#include "turbulenceModel.H"
-#include "fvBlockMatrixDST.H"
-#include "baseFluxDST.H"
-#include "JacobianDST.H"
-#include "fvmDST.H"
-#include "DST.H"
-#include "bound.H"
-#include "steadyCheck.H"
 
 namespace Foam
 {
 
-class steadyCheck;
 /*---------------------------------------------------------------------------*\
-                           Class timeDST Declaration
+                           Class steadyCheck Declaration
 \*---------------------------------------------------------------------------*/
-class timeDST
+class steadyCheck
 :
-    public Time
+    public residualControls
 {
     private:
-
+        scalar magConvergedSlope;
+        scalar minResudual;
+        scalar magScaledSlope;
+        
     protected:
-            basicThermo* thermoPtr;
-            compressible::turbulenceModel* turbulencePtr;
-            volVectorField* UPtr;
-            const IOdictDST* dictPtr;
-            autoPtr<volScalarField> rhoOldPtr;
-            autoPtr<volScalarField> eOldPtr;
-            scalar maxCo;
-            scalar minCo;
-            scalar courant;
-            autoPtr<volScalarField> courantPtr;
-            autoPtr<volScalarField> rDeltaTDSTPtr;
-            scalar residual;
-            scalar residualRatio;
 
-            // blazek courant
-            autoPtr<volVectorField> dS;
-            bool neighbouring;
-                
-           const steadyCheck* rC_;
     public:
-            //- Constructors
-            timeDST
-            (
-                    const argList& args
-            );
+        //- Constructors
+            steadyCheck(const geometricFieldDST<vector5>& W);
 
-            //- Destructor
-            ~timeDST();
+        //- Destructor
+            ~steadyCheck();
 
-            //- Member Functions
-            void initialize
-            (
-                basicThermo& thermo,
-                const IOdictDST& dict,
-                compressible::turbulenceModel& turbulence,
-                volVectorField& U
-            );
-
-            scalar coNum();
-            void setResidualControls(const steadyCheck& rC);
-            void setTransientDeltaT();
-            void setSteadyStateDeltaT();
-            void setCourantDST(const BlockSolverPerformance<vector5>* solverPerf = nullptr);
-            bool localTimeStepping();
-            const scalarField& rDeltaTDST() const;
-            bool correctTurbulence();
+        //- Member Functions
+            bool converged();
+            bool converged() const;
 };
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-} // End namespace rhoDST
+}
+
 #endif

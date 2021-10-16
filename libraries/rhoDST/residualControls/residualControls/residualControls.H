@@ -63,18 +63,15 @@ class geometricFieldDST;
 class residualControls
 {
     private:
+        
+    protected:
         const geometricFieldDST<vector5>& W_;
         const IOdictDST& dict_; 
         DynamicList<scalar> residuals;
         scalar residual;
         int iterationStart;
         int iterationCount;
-        scalar magConvergedSlope;
-        scalar minResudual;
-        scalar magScaledSlope;
         
-    protected:
-
     public:
         //- Constructors
             residualControls(const geometricFieldDST<vector5>& W);
@@ -83,8 +80,6 @@ class residualControls
             ~residualControls();
 
         //- Member Functions
-            bool converged();
-            bool converged() const;
             void addResidual(vector5 res);
             int nIter();
 };

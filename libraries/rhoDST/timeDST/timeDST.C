@@ -210,7 +210,7 @@ void timeDST::initialize
 
 
 
-void timeDST::setResidualControls(const residualControls& rC)
+void timeDST::setResidualControls(const steadyCheck& rC)
 {
     rC_ = &rC;
 }
@@ -347,7 +347,7 @@ void timeDST::setCourantDST(const BlockSolverPerformance<vector5>* solverPerf)
     }
     residual = residualR;    
     
-    if (dictPtr->steadyState() || (rC_? !rC_->converged():false))
+    if (dictPtr->steadyState() || (dictPtr->dualTime() && (rC_ ? !rC_->converged() : false)))
     {
         const volScalarField& rho = mesh.lookupObject<volScalarField>("rho");
         const volVectorField& rhoU = mesh.lookupObject<volVectorField>("rhoU");

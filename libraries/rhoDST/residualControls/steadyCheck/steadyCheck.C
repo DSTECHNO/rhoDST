@@ -40,24 +40,19 @@ Author:
 
 \*---------------------------------------------------------------------------------------*/
 
-#include "residualControls.H"
+#include "steadyCheck.H"
 namespace Foam
 {
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-residualControls::residualControls
+steadyCheck::steadyCheck
 (
     const geometricFieldDST<vector5>& W
 )
 :
-    W_(W),
-    dict_(W.dictDST()),
-    residuals(0)
+    residualControls(W)
 {
-    residual = 1;
-    iterationStart = dict_.iterationStart();
-    iterationCount = 0;
     magConvergedSlope = dict_.magConvergedSlope();
     minResudual = dict_.minResudual();
     magScaledSlope = 1;
@@ -65,13 +60,13 @@ residualControls::residualControls
 
 // * * * * * * * * * * * * * * * * Destructor  * * * * * * * * * * * * * * * //
 
-residualControls::~residualControls()
+steadyCheck::~steadyCheck()
 {}
 
 // * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * * //
 
 
-bool residualControls::converged()
+bool steadyCheck::converged()
 {
     if(iterationCount>=iterationStart)
     {
@@ -94,31 +89,12 @@ bool residualControls::converged()
         }
         magScaledSlope = (residuals.size()-1)/deltaY*mag((sumYiXi - sumXi*sumYi/N)/(sumXiSqr-pow(sumXi,2)/N));
     }
-    return (residual<minResudual || magScaledSlope < magConvergedSlope);
-}
-
-bool residualControls::converged() const
-{
     return (iterationCount > dict_.maxInnerIter() || (residual<minResudual || magScaledSlope < magConvergedSlope));
 }
 
-void residualControls::addResidual(vector5 res)
+bool steadyCheck::converged() const // called in TimeDST class
 {
-    scalar meanResidual = 0;
-    for(int i = 0; i<5; i++)
-        meanResidual += res[i];
-    meanResidual /= 5;
-    
-    Info<<"innerIter: "<<0<<", residuals: "<<meanResidual<<endl;
-    
-    iterationCount++;
-    residual = meanResidual;
-    residuals.append(meanResidual);
-}
-
-int residualControls::nIter()
-{
-    return iterationCount;
+    return (iterationCount > dict_.maxInnerIter() || (residual<minResudual || magScaledSlope < magConvergedSlope));
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 } // End namespace Foam

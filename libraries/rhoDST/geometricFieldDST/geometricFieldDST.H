@@ -52,7 +52,7 @@ SourceFiles
 #include "volFields.H"
 #include "fvCFD.H"
 #include "Vector5typedefs.H"
-#include "timeDST.H"
+#include "IOdictDST.H"
 
 namespace Foam
 {

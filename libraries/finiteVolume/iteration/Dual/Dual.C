@@ -88,7 +88,7 @@ void Dual::iterate
         <<", deltaT = "<<runTime_.deltaTValue()
         <<", Courant = "<<runTime_.coNum()<<endl;
     
-    residualControls pseudeSystemResiduals(W);
+    steadyCheck pseudeSystemResiduals(W);
     
     runTime_.setResidualControls(pseudeSystemResiduals);
     
